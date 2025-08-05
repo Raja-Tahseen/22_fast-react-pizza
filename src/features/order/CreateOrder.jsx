@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Form, redirect } from "react-router-dom";
+import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -38,7 +40,8 @@ function CreateOrder() {
     <div>
       <h2>Ready to order? Let's go!</h2>
 
-      <form>
+      {/* <Form method="POST" action="/order/new"> */}
+      <Form method="POST">
         <div>
           <label>First Name</label>
           <input type="text" name="customer" required />
@@ -66,15 +69,33 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <label htmlFor="priority">Want to give your order priority?</label>
         </div>
 
         <div>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <button>Order now</button>
         </div>
-      </form>
+      </Form>
     </div>
   );
+}
+//As we submit this special form, it will create a request that will basically be intercepted by this action function as soon as we have connected it with React Router.
+export async function action({ request }) {
+  const formData = await request.formData(); // .formData() is just a regular API provided by Browser.
+  const data = Object.fromEntries(formData);
+  //console.log(data);
+
+  const order = {
+    ...data,
+    cart: JSON.parse(data.cart),
+    priority: data.priority === "on",
+  };
+  //console.log(order);
+  const newOrder = await createOrder(order);
+  //Next need to redirect the page to "order/ID", to show user new info about the order. For this we cannot use hook "useNavigate()" bcz we can't call hooks from this func bcz hooks can only be called from inside components. So we can use redirect() func provided by React Router which simply create a new response or a new request
+
+  return redirect(`/order/${newOrder.id}`);
 }
 
 export default CreateOrder;
