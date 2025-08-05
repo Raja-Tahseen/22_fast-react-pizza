@@ -7,7 +7,7 @@ function Menu() {
   //And effectively what we just did here was to implement or to use a render as you fetch strategy because the nice thing about this is that React Router will actually start fetching the data at the same time as it starts rendering the correct route. So these things really happen at the same time, while what we did before using useEffect was always a fetch on render approach. So basically, we rendered the component first, and then after the component was already rendered is when we then would start to fetch the data. And so that would then create so-called data loading waterfalls, but not here.
 
   const menu = useLoaderData();
-  console.log(menu);
+  //console.log(menu);
 
   return (
     <ul>
