@@ -19,7 +19,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      console.log(action.payload);
+      //console.log(action.payload);
       //payload = newItem
       state.cart.push(action.payload);
     },
@@ -65,3 +65,6 @@ export const getTotalCartPrice = (state) =>
 //And by the way, having these selector functions (getTotalCartQuantity , getTotalCartPrice) here like this might actually cause performance issues in larger applications. And so if you are really serious about Redux, you can look into the "reselect" library which will allow us to optimize these selectors.
 
 export const getCart = (state) => state.cart.cart;
+
+export const getCurrentQuantityById = (id) => (state) =>
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
