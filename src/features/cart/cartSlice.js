@@ -63,3 +63,5 @@ export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
 //And by the way, having these selector functions (getTotalCartQuantity , getTotalCartPrice) here like this might actually cause performance issues in larger applications. And so if you are really serious about Redux, you can look into the "reselect" library which will allow us to optimize these selectors.
+
+export const getCart = (state) => state.cart.cart;
