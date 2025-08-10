@@ -1,11 +1,21 @@
-import { useState } from 'react';
-import Button from '../../ui/Button';
+import { useState } from "react";
+import Button from "../../ui/Button";
+import { useDispatch } from "react-redux";
+import { updateName } from "./userSlice";
+import { useNavigate } from "react-router-dom";
 
 function CreateUser() {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!username) return;
+
+    dispatch(updateName(username));
+    navigate("/menu");
   }
 
   return (
@@ -21,8 +31,10 @@ function CreateUser() {
         onChange={(e) => setUsername(e.target.value)}
         className="input mb-8 w-72"
       />
+      {/* -- We are using a controlled component's input here bcz it is a bad
+      practice to connect an input field to the Redux store. When we type the user input we should really update the local state & not always the redux store. Instead we should only do this as soon as we actually submit the form. */}
 
-      {username !== '' && (
+      {username !== "" && (
         <div>
           <Button type="primary">Start ordering</Button>
         </div>

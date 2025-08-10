@@ -1,14 +1,14 @@
 // Test ID: IIDSAT
 
-import OrderItem from './OrderItem';
+import OrderItem from "./OrderItem";
 
-import { useLoaderData } from 'react-router-dom';
-import { getOrder } from '../../services/apiRestaurant';
+import { useLoaderData } from "react-router-dom";
+import { getOrder } from "../../services/apiRestaurant";
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
-} from '../../utils/helpers';
+} from "../../utils/helpers";
 
 function Order() {
   const order = useLoaderData();
@@ -47,7 +47,7 @@ function Order() {
         <p className="font-medium">
           {deliveryIn >= 0
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
-            : 'Order should have arrived'}
+            : "Order should have arrived"}
         </p>
         <p className="text-xs text-stone-500">
           (Estimated delivery: {formatDate(estimatedDelivery)})
